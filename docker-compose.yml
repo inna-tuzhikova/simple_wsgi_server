@@ -1,0 +1,21 @@
+version: "3"
+services:
+  nginx:
+    image: nginx
+    volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+        - ./index.html:/www/data/index.html
+    ports:
+        - "8080:80"
+    networks:
+        - custom
+    depends_on:
+         - python_wsgi
+  python_wsgi:
+    container_name: python_wsgi
+    build: .
+    networks:
+         - custom
+networks:
+    custom:
+        driver: bridge
